@@ -9,11 +9,17 @@ const router = express.Router();
 // and a secret key
 function generateToken(params = {}) {
   return jwt.sign(params, 'secret', {
-    expiresIn: 86400,
+    expiresIn: '30d',
   });
 }
 
+router.get('/register', (req, res) => {
+  res.send({ ok: 'it works' });
+});
+
 router.post('/register', async (req, res) => {
+  console.log('data -> ', req.body);
+
   try {
     const { email } = req.body;
 
@@ -28,8 +34,8 @@ router.post('/register', async (req, res) => {
 
     const token = generateToken({ id: user._id });
 
-    res.send({ user, token });
-    return res.send({ user });
+    // res.send({ user, token });
+    return res.status(200).send({ user, token });
   } catch (error) {
     return res.status(400).send({ error: 'registration failed' });
   }

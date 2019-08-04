@@ -28,6 +28,8 @@ export default (req, res, next) => {
     }
 
     req.userId = decoded.id;
+    req.bla = 'blabla';
+    req.user = decoded;
     return next();
   });
 };

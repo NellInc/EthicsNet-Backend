@@ -2,9 +2,13 @@ import mongoose from '../database/index.js';
 import bcrypt from 'bcryptjs';
 
 const UserSchema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
     require: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
   },
   email: {
     type: String,
