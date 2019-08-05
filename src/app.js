@@ -13,9 +13,12 @@ app.use(cors());
 import auth from './controllers/authController.js';
 import routes from './controllers/projectController.js';
 import authMiddleware from './middlewares/auth.js';
+import apiRoutes from './controllers/textAnotateController';
 
 app.use('/auth', auth);
 app.use('/projects', authMiddleware, routes);
+
+app.use('/api', authMiddleware, apiRoutes);
 
 app.get('/', (req, res) => {
   res.json({

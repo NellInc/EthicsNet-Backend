@@ -1,6 +1,6 @@
 import mongoose from '../database/index.js';
 
-const TextAnotation = new mongoose.Schema({
+const TextAnotationSchema = new mongoose.Schema({
   content: {
     type: String,
     require: true,
@@ -15,6 +15,6 @@ const TextAnotation = new mongoose.Schema({
   },
 });
 
-const TextAnotation = mongoose.model('TextAnotation', UserSchema);
+const TextAnotation = mongoose.model('TextAnotation', TextAnotationSchema);
 
 export default TextAnotation;
