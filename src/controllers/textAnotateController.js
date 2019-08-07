@@ -45,26 +45,35 @@ router.get('/user', async (req, res) => {
 });
 
 router.get('/user/anotations', async (req, res) => {
-  try {
-
-    // const user = await User.findById(req.userId);
-
-    // console.log(req.user);
-
-    // return res.status(200).send({ message: 'user found!', user });
-
-    console.log('user id -> ', req.userId);
-    
+  try {    
     const anotations = await TextAnotation.find({
       authorId: req.userId
     })
 
     return res.status(200).send({ anotations })
 
-    //
   } catch (error) {
     console.log(error);
     return res.status(500).send({ error: 'internal server error' });
+  }
+});
+
+router.get('/user/anotations/:id', async (req, res) => {
+  try {
+    console.log(req.params.id);
+
+    const { id } = req.params;
+
+    const anotation = await TextAnotation.findById(id)
+
+    console.log(anotation);
+    
+
+    return res.status(200).send({ anotation })
+    
+  } catch (error) {
+    console.log('there was an error -> ', error);
+    return res.status(500).send({error: 'internal server error'})
   }
 });
 

@@ -17,7 +17,6 @@ import apiRoutes from './controllers/textAnotateController';
 
 app.use('/auth', auth);
 app.use('/projects', authMiddleware, routes);
-
 app.use('/api', authMiddleware, apiRoutes);
 
 app.get('/', (req, res) => {

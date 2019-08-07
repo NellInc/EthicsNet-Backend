@@ -13,10 +13,6 @@ function generateToken(params = {}) {
   });
 }
 
-router.get('/register', (req, res) => {
-  res.send({ ok: 'it works' });
-});
-
 router.post('/register', async (req, res) => {
   console.log('data -> ', req.body);
 
