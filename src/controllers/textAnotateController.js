@@ -8,7 +8,7 @@ router.get('/post-text', (req, res) => {
   res.send({
     ok: true,
     user: req.user,
-    bla: req.bla, 
+    bla: req.bla,
   });
 });
 
@@ -45,13 +45,12 @@ router.get('/user', async (req, res) => {
 });
 
 router.get('/user/anotations', async (req, res) => {
-  try {    
+  try {
     const anotations = await TextAnotation.find({
-      authorId: req.userId
-    })
+      authorId: req.userId,
+    });
 
-    return res.status(200).send({ anotations })
-
+    return res.status(200).send({ anotations });
   } catch (error) {
     console.log(error);
     return res.status(500).send({ error: 'internal server error' });
@@ -64,16 +63,45 @@ router.get('/user/anotations/:id', async (req, res) => {
 
     const { id } = req.params;
 
-    const anotation = await TextAnotation.findById(id)
+    const anotation = await TextAnotation.findById(id);
 
-    console.log(anotation);
-    
-
-    return res.status(200).send({ anotation })
-    
+    return res.status(200).send({ anotation });
   } catch (error) {
     console.log('there was an error -> ', error);
-    return res.status(500).send({error: 'internal server error'})
+    return res.status(500).send({ error: 'internal server error' });
+  }
+});
+
+router.put('/user/anotations/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const anotation = await TextAnotation.findOneAndUpdate(
+      { _id: id },
+      req.body,
+      { new: true }
+    );
+
+    console.log(req.body);
+
+    return res.status(200).send({ anotation });
+  } catch (error) {
+    console.log('there was an error -> ', error);
+    return res.status(500).send({ error: 'internal server error' });
+  }
+});
+
+router.delete('/user/anotations/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const anotation = await TextAnotation.deleteOne({ _id: id });
+    
+    return res.status(200).send({ anotation });
+
+  } catch (error) {
+    console.log('there was an error -> ', error);
+    return res.status(500).send({ error: 'internal server error' });
   }
 });
 
