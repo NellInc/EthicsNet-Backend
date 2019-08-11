@@ -14,8 +14,6 @@ function generateToken(params = {}) {
 }
 
 router.post('/register', async (req, res) => {
-  console.log('data -> ', req.body);
-
   try {
     const { email } = req.body;
 
@@ -41,8 +39,6 @@ router.post('/authenticate', async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email }).select('password');
-
-  console.log(user);
 
   if (!user) {
     return res.status(400).send({ error: 'user not found' });

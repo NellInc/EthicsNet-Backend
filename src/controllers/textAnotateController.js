@@ -13,15 +13,9 @@ router.get('/post-text', (req, res) => {
 });
 
 router.post('/post-text', async (req, res) => {
-  console.log('post text route *_*');
-
   try {
-    console.log('\n\ntext to data -> ', req.body);
-
     const textCreated = await TextAnotation.create(req.body);
-
     return res.status(200).send({ message: 'text anotated!', textCreated });
-
     //
   } catch (error) {
     console.log(error);
@@ -32,9 +26,6 @@ router.post('/post-text', async (req, res) => {
 router.get('/user', async (req, res) => {
   try {
     const user = await User.findById(req.userId);
-
-    console.log(req.user);
-
     return res.status(200).send({ message: 'user found!', user });
 
     //
@@ -59,10 +50,7 @@ router.get('/user/anotations', async (req, res) => {
 
 router.get('/user/anotations/:id', async (req, res) => {
   try {
-    console.log(req.params.id);
-
     const { id } = req.params;
-
     const anotation = await TextAnotation.findById(id);
 
     return res.status(200).send({ anotation });
@@ -81,9 +69,7 @@ router.put('/user/anotations/:id', async (req, res) => {
       req.body,
       { new: true }
     );
-
-    console.log(req.body);
-
+    
     return res.status(200).send({ anotation });
   } catch (error) {
     console.log('there was an error -> ', error);
@@ -96,9 +82,26 @@ router.delete('/user/anotations/:id', async (req, res) => {
     const { id } = req.params;
 
     const anotation = await TextAnotation.deleteOne({ _id: id });
-    
+
     return res.status(200).send({ anotation });
 
+  } catch (error) {
+    console.log('there was an error -> ', error);
+    return res.status(500).send({ error: 'internal server error' });
+  }
+});
+
+router.put('/user/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findOneAndUpdate(
+      { _id: id },
+      req.body,
+      { new: true }
+    );
+
+    return res.status(200).send({ user });
   } catch (error) {
     console.log('there was an error -> ', error);
     return res.status(500).send({ error: 'internal server error' });

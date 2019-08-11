@@ -14,10 +14,12 @@ import auth from './controllers/authController.js';
 import routes from './controllers/projectController.js';
 import authMiddleware from './middlewares/auth.js';
 import apiRoutes from './controllers/textAnotateController';
+import userRoutes from './controllers/userController'
 
 app.use('/auth', auth);
 app.use('/projects', authMiddleware, routes);
 app.use('/api', authMiddleware, apiRoutes);
+// app.use('/api', authMiddleware, userRoutes);
 
 app.get('/', (req, res) => {
   res.json({
