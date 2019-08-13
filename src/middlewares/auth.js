@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken';
 
 export default (req, res, next) => {
-  console.log('hello from the middleware');
-
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -28,7 +26,6 @@ export default (req, res, next) => {
     }
 
     req.userId = decoded.id;
-    req.bla = 'blabla';
     req.user = decoded;
     return next();
   });

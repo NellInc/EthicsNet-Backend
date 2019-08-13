@@ -5,10 +5,16 @@ import mongoose from 'mongoose';
 //   { useNewUrlParser: true }
 // );
 
+// mongoose.connect(
+//   'mongodb://localhost:27017/node-api-react',
+//   { useNewUrlParser: true }
+// );
+
 mongoose.connect(
-  'mongodb://localhost:27017/node-api-react',
+  'mongodb://mongo:27017/ethics-net',
   { useNewUrlParser: true }
 );
+
 mongoose.Promise = global.Promise;
 
 export default mongoose;

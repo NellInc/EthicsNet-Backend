@@ -1,0 +1,17 @@
+version: "2"
+services:
+  app:
+    container_name: ethics-net-backend
+    restart: always
+    build: ./
+    ports:
+      - "80:5000"
+    volumes:
+      - .:/app
+    links:
+      - mongo
+  mongo:
+    container_name: ethics-mongo
+    image: mongo
+    ports:
+      - "27017:27017"
