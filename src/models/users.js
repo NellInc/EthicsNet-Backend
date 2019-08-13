@@ -1,6 +1,7 @@
 import mongoose from '../database/index.js';
 import bcrypt from 'bcryptjs';
 
+
 const UserSchema = new mongoose.Schema({
   firstName: {
     type: String,
