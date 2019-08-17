@@ -13,3 +13,5 @@ EXPOSE 3000
 RUN npm install pm2 -g
 
 CMD [ "npm", "start" ]
+
+RUN pm2 monitor
