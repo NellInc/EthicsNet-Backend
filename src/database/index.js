@@ -12,7 +12,9 @@ import mongoose from 'mongoose';
 
 mongoose.connect(
   'mongodb://mongo:27017/ethics-net',
-  { useNewUrlParser: true }
+  { useNewUrlParser: true })
+  .then(() => console.log("Connected to MongoDB..."))
+  .catch(err => console.error("Could not connect to MongoDB...")
 );
 
 mongoose.Promise = global.Promise;
