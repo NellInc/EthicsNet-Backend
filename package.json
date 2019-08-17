@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --exec babel-node src/app.js",
     "build": "babel src --out-dir dist",
-    "start": "babel src --out-dir dist && pm2 start dist/app.js"
+    "start": "pm2 start --interpreter babel-node src/app.js"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,6 @@
     "mongoose": "^5.6.7"
   },
   "devDependencies": {
-    "pm2": "^3.5.1",
     "nodemon": "^1.19.1",
     "@babel/cli": "^7.0.0-rc.1",
     "@babel/core": "^7.0.0-rc.1",
