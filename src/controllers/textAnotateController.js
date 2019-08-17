@@ -4,6 +4,8 @@ import TextAnotation from '../models/textanotation.js';
 
 const router = express.Router();
 
+// TODO: implement authorization
+
 router.get('/post-text', (req, res) => {
   res.send({
     ok: true,
