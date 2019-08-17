@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon --exec babel-node src/app.js",
     "build": "babel src --out-dir dist",
-    "start": "pm2 start --interpreter babel-node src/app.js"
+    "start2": "nodemon -x 'node app.js || (sleep 10; touch app.js)'",
+    "start": "babel src --out-dir dist && nodemon -x 'node dist/app.js || touch dist/app.js'"
   },
   "repository": {
     "type": "git",

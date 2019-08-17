@@ -10,6 +10,6 @@ COPY . .
 
 EXPOSE 3000
 
-RUN npm install pm2 -g
+RUN npm install nodemon -g
 
 CMD [ "npm", "start" ]
