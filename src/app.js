@@ -24,7 +24,7 @@ app.use('/api', authMiddleware, apiRoutes);
 
 app.get('/', (req, res) => {
   res.json({
-    message: 'hello world!',
+    message: 'this is the ethics net api! check out out the routes!',
   });
 });
 
