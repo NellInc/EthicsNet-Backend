@@ -94,18 +94,31 @@ router.delete('/user/anotations/:id', async (req, res) => {
 });
 
 router.put('/user/image/:id', async (req, res) => {
+
   try {
     const { id } = req.params;
 
-    const user = await User.findOneAndUpdate(
+    // const user = await User.findOneAndUpdate(
+    //   {_id: id},
+    //   {cachedImg: req.body},
+    //   {new: true}
+    // )
+
+    const user = await User.updateOne(
       {_id: id},
-      {cachedImg: req.body},
-      {new: true}
-    )
+      {cachedImg: req.body.cachedImg}
+    );
+
+    return res.send({user});
+
+
 
   } catch(error) {
-    return res.status(500).send({error: 'internal server error'});
+    console.log(error);
+    // return res.status(500).send({error: 'internal server error'});
+    return res.status(500).send({error});
   }
+
 });
 
 router.put('/user/:id', async (req, res) => {
