@@ -5,7 +5,7 @@ const CachedImageSchema = new mongoose.Schema({
   authorId: {
     type: String,
     require: true
-  }
+  },
   image: {
     type: String,
     require: true,
