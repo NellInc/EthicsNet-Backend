@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema({
     required: true,
     lowercase: true,
   },
+  cachedImg: {
+    type: String,
+    default: '',
+  },
   password: {
     type: String,
     required: true,
