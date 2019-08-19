@@ -99,7 +99,7 @@ router.put('/user/image/:id', async (req, res) => {
 
     const user = await User.findOneAndUpdate(
       {_id: id},
-      cachedImg: req.body,
+      {cachedImg: req.body},
       {new: true}
     )
 
