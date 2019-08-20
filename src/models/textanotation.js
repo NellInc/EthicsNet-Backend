@@ -2,6 +2,10 @@ import mongoose from '../database/index.js';
 
 
 const TextAnotationSchema = new mongoose.Schema({
+  category: {
+    type: String,
+    require: true,
+  },
   content: {
     type: String,
     require: true,

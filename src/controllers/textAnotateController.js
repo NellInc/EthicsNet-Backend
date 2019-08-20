@@ -98,12 +98,6 @@ router.put('/user/image/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
-    // const user = await User.findOneAndUpdate(
-    //   {_id: id},
-    //   {cachedImg: req.body},
-    //   {new: true}
-    // )
-
     const user = await User.updateOne(
       {_id: id},
       {cachedImg: req.body.cachedImg}
@@ -114,9 +108,8 @@ router.put('/user/image/:id', async (req, res) => {
     return res.status(200).send({ updatedUser });
 
   } catch(error) {
-    console.log(error);
-    // return res.status(500).send({error: 'internal server error'});
-    return res.status(500).send({error});
+    console.log('there was an error -> ', error);
+    return res.status(500).send({error: 'internal server error'});
   }
 
 });
@@ -132,7 +125,7 @@ router.put('/user/:id', async (req, res) => {
     );
 
     return res.status(200).send({ user });
-    
+
   } catch (error) {
     console.log('there was an error -> ', error);
     return res.status(500).send({ error: 'internal server error' });

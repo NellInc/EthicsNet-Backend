@@ -7,8 +7,6 @@ const app = express();
 
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
-
-// app.use(cors({credentials: true, origin: true}))
 app.use(cors());
 
 import auth from './controllers/authController.js';
