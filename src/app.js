@@ -7,6 +7,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.bodyParser({limit: '50mb'}));
 
 // app.use(cors({credentials: true, origin: true}))
 app.use(cors());
@@ -28,4 +29,4 @@ app.get('/', (req, res) => {
   });
 });
 
-app.listen(5000, () => console.log('magic happens on port 5000 man!!!'));
+app.listen(5000, () => console.log('api is working usually on port 5000 (if not using docker ;)'));
