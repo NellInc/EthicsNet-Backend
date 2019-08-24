@@ -5,10 +5,12 @@ const TextAnotationSchema = new mongoose.Schema({
   category: {
     type: String,
     require: true,
+    lowercase: true
   },
   content: {
     type: String,
     require: true,
+    lowercase: true
   },
   authorId: {
     type: String,
