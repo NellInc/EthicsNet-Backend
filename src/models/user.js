@@ -1,7 +1,6 @@
 import mongoose from '../database/index.js';
 import bcrypt from 'bcryptjs';
 
-
 const UserSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -18,6 +17,61 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     required: true,
     lowercase: true,
+  },
+  country: {
+    type: String,
+    lowercase: true,
+    default: '',
+  },
+  state: {
+    type: String,
+    lowercase: true,
+    default: '',
+  },
+  age: {
+    type: String,
+    lowercase: true,
+    default: '',
+  },
+  political: {
+    type: String,
+    lowercase: true,
+    default: '',
+  },
+  religious: {
+    type: String,
+    lowercase: true,
+    default: '',
+  },
+  sexualOrientation: {
+    type: String,
+    lowercase: true,
+    default: '',
+  },
+  language: {
+    type: String,
+    lowercase: true,
+    default: '',
+  },
+  education: {
+    type: String,
+    lowercase: true,
+    default: '',
+  },
+  social: {
+    type: String,
+    lowercase: true,
+    default: '',
+  },
+  earnings: {
+    type: String,
+    lowercase: true,
+    default: '',
+  },
+  ethnicity: {
+    type: String,
+    lowercase: true,
+    default: '',
   },
   cachedImg: {
     type: String,
