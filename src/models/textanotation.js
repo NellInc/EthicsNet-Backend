@@ -7,6 +7,10 @@ const TextAnotationSchema = new mongoose.Schema({
     require: true,
     lowercase: true
   },
+  font: {
+    type: String,
+    default: 'none'
+  },
   content: {
     type: String,
     require: true,
