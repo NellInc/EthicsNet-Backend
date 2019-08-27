@@ -11,7 +11,7 @@ import mongoose from 'mongoose';
 // );
 
 mongoose.connect(
-  'mongodb://mongo:27017/ethics-net-production',
+  'mongodb://mongo:27017/ethics-net-production-beta-1',
   { useNewUrlParser: true })
   .then(() => console.log("Connected to MongoDB..."))
   .catch(err => console.error("Could not connect to MongoDB...")
