@@ -21,6 +21,7 @@ import mongoose from 'mongoose';
 mongoose.connect(
   // 'mongodb://localhost:27017/ethics-net',
   'mongodb://mongo:27017/ethics-net',
+  
   { useNewUrlParser: true })
   .then(() => console.log("Connected to MongoDB..."))
   .catch(err => console.error(err, "Could not connect to MongoDB...")
