@@ -123,7 +123,10 @@ router.put('/user/image/:id', async (req, res) => {
 
     const user = await User.updateOne(
       {_id: id},
-      {cachedImg: req.body.cachedImg}
+      {
+        cachedImg: req.body.cachedImg,
+        imageFont: req.body.imageFont
+      },
     );
 
     const updatedUser = await User.findOne({_id: id});

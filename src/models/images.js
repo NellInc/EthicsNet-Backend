@@ -3,15 +3,19 @@ import mongoose from '../database/index.js';
 const ImageSchema = new mongoose.Schema({
   title: {
     type: String,
-    require: true
+    default: '',
   },
   description: {
     type: String,
-    require: true
+    default: '',
   },
   image: {
     type: String,
     require: true,
+  },
+  imageFont: {
+    type: String,
+    default: ''
   },
   authorId: {
     type: String,
