@@ -1,6 +1,7 @@
 import express from 'express';
 import User from '../models/user.js';
 import TextAnotation from '../models/textanotation.js';
+import Image from '../models/images';
 
 const router = express.Router();
 
@@ -12,6 +13,16 @@ router.get('/post-text', (req, res) => {
     user: req.user,
     bla: req.bla,
   });
+});
+
+router.post('/image', async (req, res) => {
+  try {
+    const imageCreated = await Image.create(req.body);
+    return res.status(200).send({ message: 'image saved!', imageCreated });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ error: 'internal server error' });
+  }
 });
 
 router.post('/post-text', async (req, res) => {
@@ -31,6 +42,18 @@ router.get('/user', async (req, res) => {
     return res.status(200).send({ message: 'user found!', user });
 
     //
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ error: 'internal server error' });
+  }
+});
+
+router.get('/user/images', async (req, res) => {
+  try {
+    const images = await Image.find({
+      authorId: req.userId,
+    });
+    return res.status(200).send({ images });
   } catch (error) {
     console.log(error);
     return res.status(500).send({ error: 'internal server error' });
@@ -130,7 +153,8 @@ router.put('/user/:id', async (req, res) => {
     console.log('there was an error -> ', error);
     return res.status(500).send({ error: 'internal server error' });
   }
-
 });
+
+router.put
 
 export default router;
