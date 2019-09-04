@@ -20,6 +20,7 @@ import mongoose from 'mongoose';
 
 mongoose.connect(
   'mongodb://localhost:27017/ethics-net',
+  // this works when you run the app inside docker
   // 'mongodb://mongo:27017/ethics-net',
   
   { useNewUrlParser: true })

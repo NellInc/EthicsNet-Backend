@@ -48,6 +48,16 @@ router.get('/user', async (req, res) => {
   }
 });
 
+router.get('/user/images/all', async (req, res) => {
+  try {
+    const images = await Image.find();
+    return res.status(200).send({ images });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ error: 'internal server error' });
+  }
+});
+
 router.get('/user/images', async (req, res) => {
   try {
     const images = await Image.find({
