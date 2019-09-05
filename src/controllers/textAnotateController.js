@@ -70,6 +70,20 @@ router.get('/user/images', async (req, res) => {
   }
 });
 
+router.delete('/user/images/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const anotation = await Image.deleteOne({ _id: id });
+
+    return res.status(200).send({ anotation });
+
+  } catch (error) {
+    console.log('there was an error -> ', error);
+    return res.status(500).send({ error: 'internal server error' });
+  }
+});
+
 router.get('/user/anotations', async (req, res) => {
   try {
     const anotations = await TextAnotation.find({
