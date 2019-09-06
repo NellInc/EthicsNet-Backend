@@ -2,6 +2,7 @@ import "@babel/polyfill";
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import { PORT } from './globals';
 
 const app = express();
 
@@ -29,4 +30,4 @@ app.get('/', (req, res) => {
 console.log('\n\n is it compiling?!');
 
 // TODO: change this to 5000 when on deployment
-app.listen(80, () => console.log('api is working usually on port 5000\n\nor dev mode on port 80'));
+app.listen(PORT, () => console.log('api is working usually on port 5000\n\nor dev mode on port 80'));

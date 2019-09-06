@@ -1,32 +1,10 @@
 import mongoose from 'mongoose';
+import { DATABASE } from '../globals';
 
-// mongoose.connect(
-//   'mongodb://lupuselit:aZbThggzLma5pVi@ds345587.mlab.com:45587/node-api-react',
-//   { useNewUrlParser: true }
-// );
-
-// mongoose.connect(
-//   'mongodb://localhost:27017/node-api-react',
-//   { useNewUrlParser: true }
-// );
-
-// mongoose.connect(
-//   // 'mongodb://mongo:27017/ethics-net-production-beta-1',
-//   'mongodb://mongo:27017/ethics-net',
-//   { useNewUrlParser: true })
-//   .then(() => console.log("Connected to MongoDB..."))
-//   .catch(err => console.error("Could not connect to MongoDB...")
-// );
-
-mongoose.connect(
-  'mongodb://localhost:27017/ethics-net',
-  // this works when you run the app inside docker
-  // 'mongodb://mongo:27017/ethics-net',
-  
-  { useNewUrlParser: true })
-  .then(() => console.log("Connected to MongoDB..."))
-  .catch(err => console.error(err, "Could not connect to MongoDB...")
-);
+mongoose
+  .connect(DATABASE, { useNewUrlParser: true })
+  .then(() => console.log('Connected to MongoDB...'))
+  .catch(err => console.error(err, 'Could not connect to MongoDB...'));
 
 mongoose.Promise = global.Promise;
 
