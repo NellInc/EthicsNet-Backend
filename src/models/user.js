@@ -77,6 +77,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  imageFont: {
+    type: String,
+    default: ''
+  },
   password: {
     type: String,
     required: true,
