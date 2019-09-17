@@ -2,6 +2,7 @@ import express from 'express';
 import User from '../models/user.js';
 import TextAnotation from '../models/textanotation.js';
 import Image from '../models/images';
+import Video from '../models/video';
 
 const router = express.Router();
 
@@ -19,6 +20,16 @@ router.post('/image', async (req, res) => {
   try {
     const imageCreated = await Image.create(req.body);
     return res.status(200).send({ message: 'image saved!', imageCreated });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ error: 'internal server error' });
+  }
+});
+
+router.post('/video', async (req, res) => {
+  try {
+    const videoCreated = await Video.create(req.body);
+    return res.status(200).send({ message: 'video saved!', videoCreated });
   } catch (error) {
     console.log(error);
     return res.status(500).send({ error: 'internal server error' });
@@ -182,6 +193,5 @@ router.put('/user/:id', async (req, res) => {
   }
 });
 
-router.put
 
 export default router;
