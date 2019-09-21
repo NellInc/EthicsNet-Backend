@@ -69,6 +69,19 @@ router.get('/user/images/all', async (req, res) => {
   }
 });
 
+router.get('/user/videos', async (req, res) => {
+  try {
+    const videos = await Video.find({
+      authorId: req.userId
+    });
+
+    return res.status(200).send({ videos });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ error: 'internal server error' });
+  }
+});
+
 router.get('/user/images', async (req, res) => {
   try {
     const images = await Image.find({
