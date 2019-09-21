@@ -23,11 +23,11 @@ app.use('/api', authMiddleware, apiRoutes);
 
 app.get('/', (req, res) => {
   res.json({
-    message: 'this is the ethics net api! check out out the routes!',
+    message: 'this is the ethics net api! check out out the routes! PORT -> ' + PORT ,
   });
 });
 
 console.log('\n\n is it compiling?!');
 
 // TODO: change this to 5000 when on deployment
-app.listen(PORT, () => console.log('api is working usually on port 5000\n\nor dev mode on port 80'));
+app.listen(PORT, () => console.log('api is working usually on port ' + PORT + '\n'));
