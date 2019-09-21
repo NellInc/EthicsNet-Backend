@@ -1,4 +1,4 @@
-# Ethics Net beckend extension
+# EthicsNet backend extension
 
 ### To get the app running
 
