@@ -24,7 +24,12 @@ const VideoSchema = new mongoose.Schema({
   authorId: {
     type: String,
     required: true,
-  }
+  },
+  category: {
+    type: String,
+    require: true,
+    lowercase: true
+  },
 });
 
 const Video = mongoose.model('Video', VideoSchema);

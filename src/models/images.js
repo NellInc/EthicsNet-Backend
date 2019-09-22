@@ -20,7 +20,12 @@ const ImageSchema = new mongoose.Schema({
   authorId: {
     type: String,
     required: true,
-  }
+  },
+  category: {
+    type: String,
+    require: true,
+    lowercase: true
+  },
 });
 
 const Image = mongoose.model('Image', ImageSchema);
