@@ -168,7 +168,6 @@ router.put('/user/image/:id', async (req, res) => {
 
   try {
     const { id } = req.params;
-
     const user = await User.updateOne(
       {_id: id},
       {
@@ -178,14 +177,29 @@ router.put('/user/image/:id', async (req, res) => {
     );
 
     const updatedUser = await User.findOne({_id: id});
-
     return res.status(200).send({ updatedUser });
 
   } catch(error) {
     console.log('there was an error -> ', error);
     return res.status(500).send({error: 'internal server error'});
   }
+});
 
+router.put('/user/video/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.updateOne(
+      {_id: id},
+      {
+        cachedVideo: req.body.cachedVideo,
+      },
+    );
+    const updatedUser = await User.findOne({_id: id});
+    return res.status(200).send({ updatedUser });
+  } catch(error) {
+    console.log('there was an error -> ', error);
+    return res.status(500).send({error: 'internal server error'});
+  }
 });
 
 router.put('/user/:id', async (req, res) => {
