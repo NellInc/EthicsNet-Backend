@@ -50,9 +50,11 @@ router.post('/post-text', async (req, res) => {
 router.get('/user', async (req, res) => {
   try {
     const user = await User.findById(req.userId);
-    return res.status(200).send({ message: 'user found!', user });
+    if (user) {
+      return res.status(200).send({ message: 'user found!', user });
+    }
 
-    //
+    return res.status(404).send({ message: 'user not found!' });
   } catch (error) {
     console.log(error);
     return res.status(500).send({ error: 'internal server error' });

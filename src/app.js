@@ -27,7 +27,5 @@ app.get('/', (req, res) => {
   });
 });
 
-console.log('\n\n is it compiling??');
-
 // TODO: change this to 5000 when on deployment
 app.listen(PORT, () => console.log('api is working usually on port ' + PORT + '\n'));
