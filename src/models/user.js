@@ -5,12 +5,12 @@ const UserSchema = new mongoose.Schema({
   firstName: {
     type: String,
     require: true,
-    lowercase: true
+    lowercase: true,
   },
   lastName: {
     type: String,
     required: true,
-    lowercase: true
+    lowercase: true,
   },
   email: {
     type: String,
@@ -79,11 +79,11 @@ const UserSchema = new mongoose.Schema({
   },
   cachedVideo: {
     type: String,
-    default: ''
+    default: '',
   },
   imageFont: {
     type: String,
-    default: ''
+    default: '',
   },
   password: {
     type: String,

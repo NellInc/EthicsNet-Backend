@@ -28,7 +28,7 @@ const VideoSchema = new mongoose.Schema({
   category: {
     type: String,
     require: true,
-    lowercase: true
+    lowercase: true,
   },
 });
 

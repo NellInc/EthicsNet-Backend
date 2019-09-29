@@ -1,10 +1,9 @@
 import mongoose from '../database/index.js';
 
-
 const CachedImageSchema = new mongoose.Schema({
   authorId: {
     type: String,
-    require: true
+    require: true,
   },
   image: {
     type: String,

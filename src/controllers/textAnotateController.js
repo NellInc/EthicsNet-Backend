@@ -74,7 +74,7 @@ router.get('/user/images/all', async (req, res) => {
 router.get('/user/videos', async (req, res) => {
   try {
     const videos = await Video.find({
-      authorId: req.userId
+      authorId: req.userId,
     });
 
     return res.status(200).send({ videos });
@@ -103,20 +103,26 @@ router.delete('/user/images/:id', async (req, res) => {
     const anotation = await Image.deleteOne({ _id: id });
 
     return res.status(200).send({ anotation });
-
   } catch (error) {
     console.log('there was an error -> ', error);
     return res.status(500).send({ error: 'internal server error' });
   }
 });
 
-router.get('/user/anotations', async (req, res) => {
+router.get('/user/anotations/:page', async (req, res) => {
   try {
+    const page = req.params.page || 1;
+    const perPage = 5;
+
     const anotations = await TextAnotation.find({
       authorId: req.userId,
-    });
+    })
+      .skip(page * perPage - perPage)
+      .limit(perPage);
 
-    return res.status(200).send({ anotations });
+    const count = await TextAnotation.count();
+
+    return res.status(200).send({ anotations, count });
   } catch (error) {
     console.log(error);
     return res.status(500).send({ error: 'internal server error' });
@@ -144,7 +150,7 @@ router.put('/user/anotations/:id', async (req, res) => {
       req.body,
       { new: true }
     );
-    
+
     return res.status(200).send({ anotation });
   } catch (error) {
     console.log('there was an error -> ', error);
@@ -159,7 +165,6 @@ router.delete('/user/anotations/:id', async (req, res) => {
     const anotation = await TextAnotation.deleteOne({ _id: id });
 
     return res.status(200).send({ anotation });
-
   } catch (error) {
     console.log('there was an error -> ', error);
     return res.status(500).send({ error: 'internal server error' });
@@ -167,23 +172,21 @@ router.delete('/user/anotations/:id', async (req, res) => {
 });
 
 router.put('/user/image/:id', async (req, res) => {
-
   try {
     const { id } = req.params;
     const user = await User.updateOne(
-      {_id: id},
+      { _id: id },
       {
         cachedImg: req.body.cachedImg,
-        imageFont: req.body.imageFont
-      },
+        imageFont: req.body.imageFont,
+      }
     );
 
-    const updatedUser = await User.findOne({_id: id});
+    const updatedUser = await User.findOne({ _id: id });
     return res.status(200).send({ updatedUser });
-
-  } catch(error) {
+  } catch (error) {
     console.log('there was an error -> ', error);
-    return res.status(500).send({error: 'internal server error'});
+    return res.status(500).send({ error: 'internal server error' });
   }
 });
 
@@ -191,16 +194,16 @@ router.put('/user/video/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.updateOne(
-      {_id: id},
+      { _id: id },
       {
         cachedVideo: req.body.cachedVideo,
-      },
+      }
     );
-    const updatedUser = await User.findOne({_id: id});
+    const updatedUser = await User.findOne({ _id: id });
     return res.status(200).send({ updatedUser });
-  } catch(error) {
+  } catch (error) {
     console.log('there was an error -> ', error);
-    return res.status(500).send({error: 'internal server error'});
+    return res.status(500).send({ error: 'internal server error' });
   }
 });
 
@@ -208,19 +211,15 @@ router.put('/user/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
-    const user = await User.findOneAndUpdate(
-      { _id: id },
-      req.body,
-      { new: true }
-    );
+    const user = await User.findOneAndUpdate({ _id: id }, req.body, {
+      new: true,
+    });
 
     return res.status(200).send({ user });
-
   } catch (error) {
     console.log('there was an error -> ', error);
     return res.status(500).send({ error: 'internal server error' });
   }
 });
-
 
 export default router;

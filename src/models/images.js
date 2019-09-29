@@ -15,7 +15,7 @@ const ImageSchema = new mongoose.Schema({
   },
   imageFont: {
     type: String,
-    default: ''
+    default: '',
   },
   authorId: {
     type: String,
@@ -24,7 +24,7 @@ const ImageSchema = new mongoose.Schema({
   category: {
     type: String,
     require: true,
-    lowercase: true
+    lowercase: true,
   },
 });
 

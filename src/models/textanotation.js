@@ -1,20 +1,19 @@
 import mongoose from '../database/index.js';
 
-
 const TextAnotationSchema = new mongoose.Schema({
   category: {
     type: String,
     require: true,
-    lowercase: true
+    lowercase: true,
   },
   font: {
     type: String,
-    default: 'none'
+    default: 'none',
   },
   content: {
     type: String,
     require: true,
-    lowercase: true
+    lowercase: true,
   },
   authorId: {
     type: String,

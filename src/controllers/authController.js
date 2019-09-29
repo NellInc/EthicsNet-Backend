@@ -2,7 +2,7 @@ import express from 'express';
 import User from '../models/user.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
@@ -31,20 +31,21 @@ router.post('/register', async (req, res) => {
       // This is just a dev email account
       let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
-          port: 465,
-          secure: true,
-          auth: {
-              user: 'ethics.net.dev@gmail.com',
-              pass: 'N4fryvWgWdXhDp5r'
-          }
+        port: 465,
+        secure: true,
+        auth: {
+          user: 'ethics.net.dev@gmail.com',
+          pass: 'N4fryvWgWdXhDp5r',
+        },
       });
 
       // send mail with defined transport object
       let info = await transporter.sendMail({
         from: '"Ethics Net Team" <ethics.net.dev@gmail.com>', // sender address
-        to: email,// list of receivers
+        to: email, // list of receivers
         subject: 'Welcome to Ethics Net ✔', // Subject line
-        text: 'Welcome to Ethics Net! Now you can start annotating text from the web!', // plain text body
+        text:
+          'Welcome to Ethics Net! Now you can start annotating text from the web!', // plain text body
         html: `
               <p>
                 Welcome to Ethics Net! Now you can start annotating text from the web!
@@ -68,7 +69,7 @@ router.post('/register', async (req, res) => {
 
       console.log('Message sent: %s', info.messageId);
       console.log('email -> ', email);
-      
+
       console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
     }
 
