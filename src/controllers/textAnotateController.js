@@ -71,25 +71,40 @@ router.get('/user/images/all', async (req, res) => {
   }
 });
 
-router.get('/user/videos', async (req, res) => {
+router.get('/user/videos/:page', async (req, res) => {
   try {
+    const page = req.params.page || 1;
+    const perPage = 5;
+
     const videos = await Video.find({
       authorId: req.userId,
-    });
+    })
+      .skip(page * perPage - perPage)
+      .limit(perPage);
 
-    return res.status(200).send({ videos });
+    const count = await Video.count();
+
+    return res.status(200).send({ videos, count });
   } catch (error) {
     console.log(error);
     return res.status(500).send({ error: 'internal server error' });
   }
 });
 
-router.get('/user/images', async (req, res) => {
+router.get('/user/images/:page', async (req, res) => {
   try {
+    const page = req.params.page || 1;
+    const perPage = 10;
+
     const images = await Image.find({
       authorId: req.userId,
-    });
-    return res.status(200).send({ images });
+    })
+      .skip(page * perPage - perPage)
+      .limit(perPage);
+
+    const count = await Image.count();
+
+    return res.status(200).send({ images, count });
   } catch (error) {
     console.log(error);
     return res.status(500).send({ error: 'internal server error' });
