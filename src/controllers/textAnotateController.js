@@ -112,7 +112,7 @@ router.delete('/user/images/:id', async (req, res) => {
 router.get('/user/anotations/:page', async (req, res) => {
   try {
     const page = req.params.page || 1;
-    const perPage = 5;
+    const perPage = 10;
 
     const anotations = await TextAnotation.find({
       authorId: req.userId,
@@ -129,7 +129,7 @@ router.get('/user/anotations/:page', async (req, res) => {
   }
 });
 
-router.get('/user/anotations/:id', async (req, res) => {
+router.get('/user/anotation/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const anotation = await TextAnotation.findById(id);

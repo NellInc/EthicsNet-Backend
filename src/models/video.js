@@ -30,6 +30,10 @@ const VideoSchema = new mongoose.Schema({
     require: true,
     lowercase: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const Video = mongoose.model('Video', VideoSchema);
