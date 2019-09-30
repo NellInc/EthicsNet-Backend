@@ -16,6 +16,7 @@ router.get('/post-text', (req, res) => {
   });
 });
 
+// MOVED
 router.post('/image', async (req, res) => {
   try {
     const imageCreated = await Image.create(req.body);
@@ -26,6 +27,7 @@ router.post('/image', async (req, res) => {
   }
 });
 
+// MOVED
 router.post('/video', async (req, res) => {
   try {
     const videoCreated = await Video.create(req.body);
@@ -36,6 +38,7 @@ router.post('/video', async (req, res) => {
   }
 });
 
+// FIXME: MOVED
 router.post('/post-text', async (req, res) => {
   try {
     const textCreated = await TextAnotation.create(req.body);
@@ -47,6 +50,7 @@ router.post('/post-text', async (req, res) => {
   }
 });
 
+// FIXME: MOVED TO USERCONTROLLER
 router.get('/user', async (req, res) => {
   try {
     const user = await User.findById(req.userId);
@@ -61,6 +65,7 @@ router.get('/user', async (req, res) => {
   }
 });
 
+// TO MOVE!!@!
 router.get('/user/images/all', async (req, res) => {
   try {
     const images = await Image.find();
@@ -71,6 +76,7 @@ router.get('/user/images/all', async (req, res) => {
   }
 });
 
+// FIXME: MOVED!
 router.get('/user/videos/:page', async (req, res) => {
   try {
     const page = req.params.page || 1;
@@ -91,6 +97,7 @@ router.get('/user/videos/:page', async (req, res) => {
   }
 });
 
+//  MOVED
 router.get('/user/images/:page', async (req, res) => {
   try {
     const page = req.params.page || 1;
@@ -111,6 +118,7 @@ router.get('/user/images/:page', async (req, res) => {
   }
 });
 
+// MOVED
 router.delete('/user/images/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -124,6 +132,7 @@ router.delete('/user/images/:id', async (req, res) => {
   }
 });
 
+// MOVED
 router.get('/user/anotations/:page', async (req, res) => {
   try {
     const page = req.params.page || 1;
@@ -144,6 +153,7 @@ router.get('/user/anotations/:page', async (req, res) => {
   }
 });
 
+// MOVED
 router.get('/user/anotation/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -156,6 +166,7 @@ router.get('/user/anotation/:id', async (req, res) => {
   }
 });
 
+// MOVED
 router.put('/user/anotations/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -173,6 +184,7 @@ router.put('/user/anotations/:id', async (req, res) => {
   }
 });
 
+// MOVED
 router.delete('/user/anotations/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -186,6 +198,7 @@ router.delete('/user/anotations/:id', async (req, res) => {
   }
 });
 
+// USER ROUTE ?!? OR PLACE IT ON A DIFFERENT PLACE
 router.put('/user/image/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -205,6 +218,7 @@ router.put('/user/image/:id', async (req, res) => {
   }
 });
 
+// USER ROUTE ?!? OR PLACE IT ON A DIFFERENT PLACE
 router.put('/user/video/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -222,6 +236,7 @@ router.put('/user/video/:id', async (req, res) => {
   }
 });
 
+// FIXME: MOVED!
 router.put('/user/:id', async (req, res) => {
   try {
     const { id } = req.params;
