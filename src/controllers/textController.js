@@ -56,7 +56,7 @@ router.delete('/:id', async (req, res) => {
 router.get('/page/:page', async (req, res) => {
   try {
     const page = req.params.page || 1;
-    const perPage = 10;
+    const perPage = 5;
 
     const anotations = await Text.find({
       authorId: req.userId,

@@ -1,3 +1,8 @@
+// ------------ ------------ -----------
+// This file was used before, just here to make sure all works
+// Migratting stuff
+// ------------ ------------ -----------
+
 import express from 'express';
 import User from '../models/user.js';
 import TextAnotation from '../models/textanotation.js';
@@ -5,8 +10,6 @@ import Image from '../models/images';
 import Video from '../models/video';
 
 const router = express.Router();
-
-// TODO: implement authorization
 
 router.get('/post-text', (req, res) => {
   res.send({
@@ -101,7 +104,7 @@ router.get('/user/videos/:page', async (req, res) => {
 router.get('/user/images/:page', async (req, res) => {
   try {
     const page = req.params.page || 1;
-    const perPage = 10;
+    const perPage = 5;
 
     const images = await Image.find({
       authorId: req.userId,
