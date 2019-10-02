@@ -3,13 +3,8 @@ import User from '../models/user';
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  const { userId } = req;
-  res.send({ message: 'user routes...', userId });
-});
-
 // returns the user data
-router.get('/user', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const user = await User.findById(req.userId);
     if (user) {
@@ -23,7 +18,7 @@ router.get('/user', async (req, res) => {
 });
 
 // Updates the user info
-router.put('/user/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findOneAndUpdate({ _id: id }, req.body, {
@@ -38,7 +33,7 @@ router.put('/user/:id', async (req, res) => {
 });
 
 // Deletes an user
-router.delete('/user/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.remove({ _id: id });
