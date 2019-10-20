@@ -34,6 +34,10 @@ const VideoSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  selectedPerson: {
+    type: String,
+    default: '',
+  },
 });
 
 const Video = mongoose.model('Video', VideoSchema);

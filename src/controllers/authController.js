@@ -27,6 +27,7 @@ router.post('/register', async (req, res) => {
     console.log('\n\n user created -> ', user);
 
     if (user) {
+    // if (false) {
       // create reusable transporter object using the default SMTP transport
       // This is just a dev email account
       let transporter = nodemailer.createTransport({
@@ -81,6 +82,9 @@ router.post('/register', async (req, res) => {
     // res.send({ user, token });
     return res.status(200).send({ user, token });
   } catch (error) {
+    console.log('====================================');
+    console.log('registration failed -> ', error);
+    console.log('====================================');
     return res.status(400).send({ error: 'registration failed' });
   }
 });

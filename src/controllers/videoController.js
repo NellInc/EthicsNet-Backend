@@ -1,5 +1,5 @@
 import express from 'express';
-import Video from '../models/video'
+import Video from '../models/video';
 
 const router = express.Router();
 
@@ -31,6 +31,25 @@ router.get('/:page', async (req, res) => {
     return res.status(200).send({ videos, count });
   } catch (error) {
     console.log(error);
+    return res.status(500).send({ error: 'internal server error' });
+  }
+});
+
+router.put('/update/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { selectedPerson } = req.body;
+
+    const video = await Video.findOneAndUpdate(
+      { _id: id },
+      { selectedPerson },
+      { new: true }
+    );
+
+    return res.status(200).send({ video });
+  } catch (error) {
+    console.log('there was an error -> ', error);
     return res.status(500).send({ error: 'internal server error' });
   }
 });
