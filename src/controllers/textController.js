@@ -58,13 +58,17 @@ router.get('/page/:page', async (req, res) => {
     const page = req.params.page || 1;
     const perPage = 5;
 
+    console.log('====================================');
+    console.log(req.userId);
+    console.log('====================================');
+
     const anotations = await Text.find({
       authorId: req.userId,
     })
       .skip(page * perPage - perPage)
       .limit(perPage);
 
-    const count = await Text.count();
+    const count = await Text.find({ authorId: req.userId }).count();
 
     return res.status(200).send({ anotations, count });
   } catch (error) {
