@@ -1,5 +1,6 @@
 // ------------ ------------ -----------
 // This file was used before, just here to make sure all works
+// must migrate the frontend
 // Migratting stuff
 // ------------ ------------ -----------
 

@@ -31,12 +31,12 @@ router.post('/register', async (req, res) => {
       // create reusable transporter object using the default SMTP transport
       // This is just a dev email account
       let transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
+        host: 'smtp.sendgrid.net',
         port: 465,
         secure: true,
         auth: {
-          user: 'ethics.net.dev@gmail.com',
-          pass: 'N4fryvWgWdXhDp5r',
+          user: 'apikey',
+          pass: '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',
         },
       });
 
