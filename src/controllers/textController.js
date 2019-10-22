@@ -58,10 +58,6 @@ router.get('/page/:page', async (req, res) => {
     const page = req.params.page || 1;
     const perPage = 5;
 
-    console.log('====================================');
-    console.log(req.userId);
-    console.log('====================================');
-
     const anotations = await Text.find({
       authorId: req.userId,
     })

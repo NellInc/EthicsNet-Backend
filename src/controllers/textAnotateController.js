@@ -91,7 +91,7 @@ router.get('/user/videos/:page', async (req, res) => {
       .skip(page * perPage - perPage)
       .limit(perPage);
 
-    const count = await Video.count();
+    const count = await Video.find({ authorId: req.userId }).count();
 
     return res.status(200).send({ videos, count });
   } catch (error) {
@@ -112,7 +112,7 @@ router.get('/user/images/:page', async (req, res) => {
       .skip(page * perPage - perPage)
       .limit(perPage);
 
-    const count = await Image.count();
+    const count = await Image.find({ authorId: req.userId }).count();
 
     return res.status(200).send({ images, count });
   } catch (error) {
@@ -147,7 +147,7 @@ router.get('/user/anotations/:page', async (req, res) => {
       .skip(page * perPage - perPage)
       .limit(perPage);
 
-    const count = await TextAnotation.count();
+    const count = await TextAnotation.find({ authorId: req.userId }).count();
 
     return res.status(200).send({ anotations, count });
   } catch (error) {

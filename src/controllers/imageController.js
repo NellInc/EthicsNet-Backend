@@ -37,7 +37,7 @@ router.get('/page/:page', async (req, res) => {
       .skip(page * perPage - perPage)
       .limit(perPage);
 
-    const count = await Image.count();
+    const count = await Image.find({ authorId: req.userId }).count();
 
     return res.status(200).send({ images, count });
   } catch (error) {

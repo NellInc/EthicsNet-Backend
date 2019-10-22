@@ -26,7 +26,7 @@ router.get('/:page', async (req, res) => {
       .skip(page * perPage - perPage)
       .limit(perPage);
 
-    const count = await Video.count();
+    const count = await Video.find({ authorId: req.userId }).count();
 
     return res.status(200).send({ videos, count });
   } catch (error) {
