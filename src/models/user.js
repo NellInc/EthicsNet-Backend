@@ -43,6 +43,11 @@ const UserSchema = new mongoose.Schema({
     lowercase: true,
     default: '',
   },
+  gender: {
+    type: String,
+    lowsercase: true,
+    default: '',
+  },
   sexualOrientation: {
     type: String,
     lowercase: true,
