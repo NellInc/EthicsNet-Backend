@@ -44,6 +44,8 @@ router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
+    console.log('deleting annotation...');
+
     const anotation = await Text.deleteOne({ _id: id });
 
     return res.status(200).send({ anotation });
