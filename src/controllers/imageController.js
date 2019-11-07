@@ -14,16 +14,26 @@ router.post('/', async (req, res, _next) => {
 });
 
 // TODO: Update an image
+router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const image = await Image.findOneAndUpdate({ _id: id }, req.body, {
+      new: true,
+    });
 
-router.put('/:id', async (req, res) => {});
+    return res.status(200).send({ image });
+  } catch (error) {
+    console.log('there was an error -> ', error);
+    return res.status(500).send({ error: 'internal server error' });
+  }
+});
 
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
+    const image = await Image.deleteOne({ _id: id });
 
-    const anotation = await Image.deleteOne({ _id: id });
-
-    return res.status(200).send({ anotation });
+    return res.status(200).send({ image });
   } catch (error) {
     console.log('there was an error -> ', error);
     return res.status(500).send({ error: 'internal server error' });
