@@ -21,15 +21,22 @@ import textRoutes from './controllers/textController';
 import imageRoutes from './controllers/imageController';
 import videoRoutes from './controllers/videoController';
 
+function blah(req, res, next) {
+  console.log(req.body);
+  console.log('yey, im a middleware!!');
+  // next();
+  console.log('hanging forever!');
+
+  res.status(301).send({ error: 'please move this route' });
+}
 
 app.use('/auth', auth);
-app.use('/api', authMiddleware, apiRoutes);
+app.use('/api', blah, authMiddleware, apiRoutes);
 
 app.use('/api2/user', authMiddleware, userRoutes);
 app.use('/api2/text', authMiddleware, textRoutes);
 app.use('/api2/image', authMiddleware, imageRoutes);
 app.use('/api2/video', authMiddleware, videoRoutes);
-
 
 app.get('/', (req, res) => {
   res.json({
