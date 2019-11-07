@@ -31,7 +31,7 @@ function blah(req, res, next) {
 }
 
 app.use('/auth', auth);
-app.use('/api', blah, authMiddleware, apiRoutes);
+app.use('/api', authMiddleware, apiRoutes);
 
 app.use('/api2/user', authMiddleware, userRoutes);
 app.use('/api2/text', authMiddleware, textRoutes);
