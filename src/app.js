@@ -39,9 +39,12 @@ app.use('/api2/image', authMiddleware, imageRoutes);
 app.use('/api2/video', authMiddleware, videoRoutes);
 
 app.get('/', (req, res) => {
+
+  // throw new Error('error')
+
   res.json({
     message:
-      'this is the ethics net api! check out out the routes! PORT -> ' + PORT,
+      'this is the ethics net api! :) check out out the routes! PORT -> ' + PORT,
   });
 });
 
