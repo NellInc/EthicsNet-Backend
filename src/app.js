@@ -46,6 +46,6 @@ app.get('/', (req, res) => {
 });
 
 // TODO: change this to 5000 when on deployment
-app.listen(PORT, () =>
-  console.log('api is working usually on port ' + PORT + '\n')
+app.listen(80, () =>
+  console.log('api is working usually on port 80')
 );
