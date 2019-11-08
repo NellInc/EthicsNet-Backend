@@ -52,3 +52,6 @@ app.get('/', (req, res) => {
 app.listen(80, () =>
   console.log('api is working usually on port 80')
 );
+
+// its better to blow up a home than continue with one unworth the name
+// cada um colhe o que planta?

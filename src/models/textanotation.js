@@ -1,9 +1,11 @@
 import mongoose from '../database/index.js';
 
 const TextAnotationSchema = new mongoose.Schema({
+  // keep this for compatibility
   category: {
     type: String,
-    require: true,
+    require: false,
+    default: '',
     lowercase: true,
   },
   font: {
@@ -18,6 +20,16 @@ const TextAnotationSchema = new mongoose.Schema({
   authorId: {
     type: String,
     required: true,
+  },
+  categoryRangeContentAction: {
+    type: Number,
+    required: true,
+    default: 50,
+  },
+  categoryRangeToneForm: {
+    type: Number,
+    required: true,
+    default: 50,
   },
   createdAt: {
     type: Date,
