@@ -77,7 +77,7 @@ router.post('/register', async (req, res) => {
     // so the password doesnt get sent back on the response
     user.password = undefined;
 
-    const token = generateToken({ id: user._id });
+    const token = generateToken({ id: user._id, isAdmin: user.isAdmin });
 
     // res.send({ user, token });
     return res.status(200).send({ user, token });
@@ -92,7 +92,7 @@ router.post('/register', async (req, res) => {
 router.post('/authenticate', async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email }).select('password');
+  const user = await User.findOne({ email }).select('password').select('isAdmin');
 
   if (!user) {
     return res.status(400).send({ error: 'user not found' });
@@ -104,8 +104,8 @@ router.post('/authenticate', async (req, res) => {
 
   const fullUser = await User.findById(user._id);
   fullUser.password = undefined;
-
-  const token = generateToken({ id: user._id });
+  
+  const token = generateToken({ id: user._id, isAdmin: user.isAdmin });
   res.send({ user: fullUser, token });
 });
 

@@ -16,10 +16,12 @@ import auth from './controllers/authController.js';
 import authMiddleware from './middlewares/auth.js';
 import apiRoutes from './controllers/textAnotateController';
 
+import adminMiddleware from './middlewares/admin';
 import userRoutes from './controllers/userController';
 import textRoutes from './controllers/textController';
 import imageRoutes from './controllers/imageController';
 import videoRoutes from './controllers/videoController';
+import adminRoutes from './controllers/adminController';
 
 function blah(req, res, next) {
   console.log(req.body);
@@ -37,6 +39,7 @@ app.use('/api2/user', authMiddleware, userRoutes);
 app.use('/api2/text', authMiddleware, textRoutes);
 app.use('/api2/image', authMiddleware, imageRoutes);
 app.use('/api2/video', authMiddleware, videoRoutes);
+app.use('/api2/admin', adminMiddleware, adminRoutes);
 
 app.get('/', (req, res) => {
 
