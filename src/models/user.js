@@ -12,6 +12,10 @@ const UserSchema = new mongoose.Schema({
     required: true,
     lowercase: true,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   email: {
     type: String,
     unique: true,

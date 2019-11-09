@@ -21,6 +21,13 @@ router.get('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
+
+    // user cannot update their admin role
+    // must to that manually --
+    delete req.body.isAdmin;
+    console.log(typeof req.body);
+    console.log(req.body);
+
     const user = await User.findOneAndUpdate({ _id: id }, req.body, {
       new: true,
     });
@@ -46,9 +53,8 @@ router.delete('/:id', async (req, res) => {
 
 // Updates an user image
 router.put('/image/:id', async (req, res) => {
-
   console.log('user controller route was called!!');
-  
+
   try {
     const { id } = req.params;
     const user = await User.updateOne(
@@ -69,9 +75,8 @@ router.put('/image/:id', async (req, res) => {
 
 // Updates an user video
 router.put('/video/:id', async (req, res) => {
-
   console.log('new video route was called!');
-  
+
   try {
     const { id } = req.params;
     const user = await User.updateOne(
@@ -85,7 +90,7 @@ router.put('/video/:id', async (req, res) => {
   } catch (error) {
     console.log('there was an error -> ', error);
     return res.status(500).send({ error: 'internal server error' });
-  } 
+  }
 });
 
 export default router;
