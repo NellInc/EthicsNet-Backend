@@ -53,8 +53,6 @@ router.delete('/:id', async (req, res) => {
 
 // Updates an user image
 router.put('/image/:id', async (req, res) => {
-  console.log('user controller route was called!!');
-
   try {
     const { id } = req.params;
     const user = await User.updateOne(
@@ -75,8 +73,6 @@ router.put('/image/:id', async (req, res) => {
 
 // Updates an user video
 router.put('/video/:id', async (req, res) => {
-  console.log('new video route was called!');
-
   try {
     const { id } = req.params;
     const user = await User.updateOne(

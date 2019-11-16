@@ -3,8 +3,6 @@ import jwt from 'jsonwebtoken';
 export default (req, res, next) => {
   const authHeader = req.headers.authorization;
 
-  console.log('trying to authorize user...');
-
   if (!authHeader) {
     return res.status(401).send({ error: 'no token provided' });
   }
@@ -30,8 +28,6 @@ export default (req, res, next) => {
     if (!decoded.isAdmin) {
       return res.status(401).send({ error: 'user is not an admin' });
     }
-
-    console.log('decoded -> ', decoded);
 
     req.userId = decoded.id;
     req.isAdmin = decoded.isAdmin;
