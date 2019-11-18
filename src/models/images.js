@@ -26,6 +26,16 @@ const ImageSchema = new mongoose.Schema({
     require: true,
     lowercase: true,
   },
+  categoryRangeContentAction: {
+    type: Number,
+    required: true,
+    default: 50,
+  },
+  categoryRangeToneForm: {
+    type: Number,
+    required: true,
+    default: 50,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
