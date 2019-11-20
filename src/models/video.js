@@ -30,6 +30,16 @@ const VideoSchema = new mongoose.Schema({
     require: true,
     lowercase: true,
   },
+  contentAction: {
+    type: Number,
+    required: true,
+    default: 50,
+  },
+  toneForm: {
+    type: Number,
+    required: true,
+    default: 50,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
