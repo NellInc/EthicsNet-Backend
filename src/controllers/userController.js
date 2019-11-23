@@ -1,5 +1,8 @@
 import express from 'express';
 import User from '../models/user';
+import Image from '../models/images';
+import Video from '../models/video';
+import Text from '../models/textanotation';
 
 const router = express.Router();
 
@@ -13,6 +16,51 @@ router.get('/', async (req, res) => {
     return res.status(404).send({ message: 'user not found!' });
   } catch (error) {
     console.log(error);
+    return res.status(500).send({ error: 'internal server error' });
+  }
+});
+
+router.get('/data', async (req, res) => {
+  // get all data related to the user
+
+  console.log('USER ID -> ', req.userId);
+
+  try {
+    const user = await User.findById(req.userId);
+    const image = await Image.find({
+      authorId: req.userId,
+    });
+    const video = await Video.find({
+      authorId: req.userId,
+    });
+    const text = await Text.find({
+      authorId: req.userId,
+    });
+
+    const newVideo = video.map(el => {
+      el._id = undefined;
+      el.userId = undefined;
+      el.category = undefined;
+
+      console.log(el._id);
+
+      // console.log(el);
+
+      return el;
+    });
+
+    user.cachedImg = undefined;
+    user.cachedVideo = undefined;
+    user._id = undefined;
+    user.isAdmin = undefined;
+    user.imageFont = undefined;
+
+    return res
+      .status(200)
+      .send({ data: { image, video: newVideo, text, user } });
+  } catch (error) {
+    console.log('error -> ', error);
+
     return res.status(500).send({ error: 'internal server error' });
   }
 });
