@@ -87,13 +87,15 @@ router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.remove({ _id: id });
-    const removedText = await Text.remove({authorId: id});
-    const removedImage = await Image.remove({authorId: id});
-    const removedVideo = await Video.remove({authorId: id});
+    const removedText = await Text.remove({ authorId: id });
+    const removedImage = await Image.remove({ authorId: id });
+    const removedVideo = await Video.remove({ authorId: id });
 
     console.log('removed data -> ', removedText, removedImage, removedVideo);
 
-    return res.status(200).send({ user, removedText, removedImage, removedVideo });
+    return res
+      .status(200)
+      .send({ user, removedText, removedImage, removedVideo });
   } catch (error) {
     console.log('there was an error -> ', error);
     return res.status(500).send({ error: 'internet server error' });

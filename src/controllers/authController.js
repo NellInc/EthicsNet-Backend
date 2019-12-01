@@ -27,7 +27,7 @@ router.post('/register', async (req, res) => {
     console.log('\n\n user created -> ', user);
 
     if (user) {
-    // if (false) {
+      // if (false) {
       // create reusable transporter object using the default SMTP transport
       // This is just a dev email account
       let transporter = nodemailer.createTransport({
@@ -36,7 +36,8 @@ router.post('/register', async (req, res) => {
         secure: true,
         auth: {
           user: 'apikey',
-          pass: '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',
+          pass:
+            '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',
         },
       });
 
@@ -92,7 +93,9 @@ router.post('/register', async (req, res) => {
 router.post('/authenticate', async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email }).select('password').select('isAdmin');
+  const user = await User.findOne({ email })
+    .select('password')
+    .select('isAdmin');
 
   if (!user) {
     return res.status(400).send({ error: 'user not found' });
@@ -104,9 +107,19 @@ router.post('/authenticate', async (req, res) => {
 
   const fullUser = await User.findById(user._id);
   fullUser.password = undefined;
-  
+
   const token = generateToken({ id: user._id, isAdmin: user.isAdmin });
   res.send({ user: fullUser, token });
+});
+
+router.get('/email/:email', async (req, res) => {
+  const { email } = req.params;
+
+  if (await User.findOne({ email })) {
+    return res.status(400).send({ error: 'user already exists' });
+  }
+
+  return res.status(200).send({ msg: 'ok' });
 });
 
 export default router;
