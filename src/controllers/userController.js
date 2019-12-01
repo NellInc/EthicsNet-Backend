@@ -20,11 +20,9 @@ router.get('/', async (req, res) => {
   }
 });
 
+// get all data related to the use
 router.get('/data', async (req, res) => {
-  // get all data related to the user
-
   console.log('USER ID -> ', req.userId);
-
   try {
     const user = await User.findById(req.userId);
     const image = await Image.find({
@@ -43,9 +41,6 @@ router.get('/data', async (req, res) => {
       el.category = undefined;
 
       console.log(el._id);
-
-      // console.log(el);
-
       return el;
     });
 
@@ -92,7 +87,13 @@ router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.remove({ _id: id });
-    return res.status(200).send({ user });
+    const removedText = await Text.remove({authorId: id});
+    const removedImage = await Image.remove({authorId: id});
+    const removedVideo = await Video.remove({authorId: id});
+
+    console.log('removed data -> ', removedText, removedImage, removedVideo);
+
+    return res.status(200).send({ user, removedText, removedImage, removedVideo });
   } catch (error) {
     console.log('there was an error -> ', error);
     return res.status(500).send({ error: 'internet server error' });
