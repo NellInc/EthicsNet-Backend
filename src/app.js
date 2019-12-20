@@ -3,6 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { PORT } from './globals';
+import morgan from 'morgan';
 
 const app = express();
 
@@ -11,6 +12,8 @@ app.use(
   express.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 })
 );
 app.use(cors());
+// app.use(morgan(':method :status :res[content-length] - :response-time ms'));
+app.use(morgan('dev'));
 
 import auth from './controllers/authController.js';
 import authMiddleware from './middlewares/auth.js';

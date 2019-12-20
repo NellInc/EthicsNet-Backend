@@ -1,20 +1,20 @@
 Arguments: 
-  /Users/lupuselit/.nvm/versions/node/v10.13.0/bin/node /usr/local/Cellar/yarn/1.16.0/libexec/bin/yarn.js add @babel/polyfill
+  /usr/local/Cellar/node@12/12.13.1/bin/node /usr/local/Cellar/yarn/1.16.0/libexec/bin/yarn.js add morgan
 
 PATH: 
-  /Users/lupuselit/.nvm/versions/node/v10.13.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/lupuselit/.nvm/versions/node/v10.13.0/bin
+  /usr/local/opt/node@12/bin:/Users/lupuselit/.nvm/versions/node/v10.13.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/lupuselit/Library/Android/sdk/emulator:/Users/lupuselit/Library/Android/sdk/tools:/Users/lupuselit/Library/Android/sdk/tools/bin:/Users/lupuselit/Library/Android/sdk/platform-tools
 
 Yarn version: 
   1.16.0
 
 Node version: 
-  10.13.0
+  12.13.1
 
 Platform: 
   darwin x64
 
 Trace: 
-  Error: EACCES: permission denied, mkdir '/Users/lupuselit/workspace/freelance/ethics-net/ethics-eth-back-end/node_modules/@babel/polyfill'
+  Error: EACCES: permission denied, unlink '/Users/lupuselit/workspace/freelance/ethics-net/EthicsNet-Backend/node_modules/@babel/code-frame/README.md'
 
 npm manifest: 
   {
@@ -25,7 +25,10 @@ npm manifest:
     "scripts": {
       "dev": "nodemon --exec babel-node src/app.js",
       "build": "babel src --out-dir dist",
-      "start": "babel src --out-dir dist && nodemon -x 'node dist/app.js || touch dist/app.js'"
+      "start": "babel src --out-dir dist && nodemon -x 'node dist/app.js || touch dist/app.js'",
+      "prod": "yarn build && pm2 start dist/app.js --name 'ethics-net'",
+      "stop-prod": "pm2 stop ethics-net",
+      "restart-prod": "pm2 stop ethics-net"
     },
     "repository": {
       "type": "git",
@@ -38,6 +41,7 @@ npm manifest:
     },
     "homepage": "https://github.com/lupuselit/ethics-eth-back-end#readme",
     "dependencies": {
+      "@babel/polyfill": "^7.6.0",
       "babel-polyfill": "^6.26.0",
       "bcryptjs": "^2.4.3",
       "body-parser": "^1.19.0",
@@ -640,6 +644,14 @@ Lockfile:
       "@babel/helper-regex" "^7.4.4"
       regexpu-core "^4.6.0"
   
+  "@babel/polyfill@^7.6.0":
+    version "7.6.0"
+    resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.6.0.tgz#6d89203f8b6cd323e8d946e47774ea35dc0619cc"
+    integrity sha512-q5BZJI0n/B10VaQQvln1IlDK3BTBJFbADx7tv+oXDPIDZuTo37H5Adb9jhlXm/fEN4Y7/64qD9mnrJJG7rmaTw==
+    dependencies:
+      core-js "^2.6.5"
+      regenerator-runtime "^0.13.2"
+  
   "@babel/preset-env@^7.0.0-rc.1":
     version "7.6.3"
     resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.6.3.tgz#9e1bf05a2e2d687036d24c40e4639dc46cef2271"
@@ -1190,7 +1202,7 @@ Lockfile:
       browserslist "^4.7.0"
       semver "^6.3.0"
   
-  core-js@^2.4.0, core-js@^2.5.0:
+  core-js@^2.4.0, core-js@^2.5.0, core-js@^2.6.5:
     version "2.6.10"
     resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.10.tgz#8a5b8391f8cc7013da703411ce5b585706300d7f"
     integrity sha512-I39t74+4t+zau64EN1fE5v2W31Adtc/REhzWN+gWRRXg6WH5qAsZm62DHpQ1+Yhe4047T55jvzz7MUqF/dBBlA==
@@ -2864,7 +2876,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
     integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
   
-  regenerator-runtime@^0.13.3:
+  regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.3:
     version "0.13.3"
     resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.3.tgz#7cf6a77d8f5c6f60eb73c5fc1955b2ceb01e6bf5"
     integrity sha512-naKIZz2GQ8JWh///G7L3X6LaQUAMp2lvb1rvwwsURe/VXwD6VMfr+/1NuNw3ag8v2kY1aQ/go5SNn79O9JU7yw==
