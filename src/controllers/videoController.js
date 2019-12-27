@@ -54,6 +54,21 @@ router.put('/update/:id', async (req, res) => {
   }
 });
 
+router.put('/edit/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const video = await Video.findOneAndUpdate({ _id: id }, req.body, {
+      new: true,
+    });
+
+    return res.status(200).send({ video });
+  } catch (error) {
+    console.log('there was an error -> ', error);
+    return res.status(500).send({ error: 'internal server error' });
+  }
+});
+
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
