@@ -60,6 +60,10 @@ app.get('/', (req, res) => {
 
 // TODO: change this to 5000 when on deployment
 
+console.log('====================================');
+console.log('PROCESS ENV -> ', process.env.NODE_ENV);
+console.log('====================================');
+
 export default app;
 // module.exports = app;
 // app.listen(80, () => console.log('api is working usually on port 80'));
