@@ -2,12 +2,13 @@ import app from './app';
 import supertest from 'supertest';
 import mongoose from 'mongoose';
 
+jest.setTimeout(30000);
+
 const request = supertest(app);
 
 describe('get endpoints', () => {
   it('gets the healthcheck endpoint', async done => {
     const response = await request.get('/healthcheck');
-
     expect(response.status).toBe(200);
     expect(response.body.msg).toBe('ok');
     done();
@@ -18,29 +19,75 @@ describe('get endpoints', () => {
       // .get('/healthcheck')
       .post('/auth/register')
       .send({
-        email: 'emerson@gmail.com',
+        email: 'emerson99@gmail.com',
         password: '123',
         lastName: 'Lopes',
         firstName: 'Emerson',
       });
 
     expect(response.statusCode).toEqual(200);
-
-    // console.log('====================================');
-    // console.log('response.body from tests -> ', response.body);
-    // console.log('====================================');
-
-    // drop database
     mongoose.connection.db.dropDatabase();
-    // const { _id } = response;
     done();
   });
 
-  // it('should log user in', async done => {
-  //   const response = await request
-  //     .get('/auth/login');
-      
-  // })
+  it('should throw an error if no email is provided', async done => {
+    const response = await request.post('/auth/register').send({
+      email: '',
+      password: '123',
+      lastName: 'Lopes',
+      firstName: 'Emerson',
+    });
+    expect(response.statusCode).toEqual(400);
+    expect(response.body.errorMessage).toBe(
+      'User validation failed: email: Path `email` is required.'
+    );
 
+    mongoose.connection.db.dropDatabase();
+    done();
+  });
 
+  it('should throw an error if no firstName is provided', async done => {
+    const response = await request.post('/auth/register').send({
+      email: 'emerson1@gmail.com',
+      password: '123',
+      lastName: 'Lopes',
+      firstName: '',
+    });
+    expect(response.statusCode).toEqual(400);
+    expect(response.body.errorMessage).toBe(
+      'User validation failed: firstName: Path `firstName` is required.'
+    );
+    mongoose.connection.db.dropDatabase();
+    done();
+  });
+
+  it('should throw an error if no lastName is provided', async done => {
+    const response = await request.post('/auth/register').send({
+      email: 'emerson2@gmail.com',
+      password: '123',
+      lastName: '',
+      firstName: 'Emerson',
+    });
+    expect(response.statusCode).toEqual(400);
+    expect(response.body.errorMessage).toBe(
+      'User validation failed: lastName: Path `lastName` is required.'
+    );
+    mongoose.connection.db.dropDatabase();
+    done();
+  });
+
+  it('should throw an error if no password is provided', async done => {
+    const response = await request.post('/auth/register').send({
+      email: 'emerson3@gmail.com',
+      password: '',
+      lastName: 'Lopes',
+      firstName: 'Emerson',
+    });
+    expect(response.statusCode).toEqual(400);
+    expect(response.body.errorMessage).toBe(
+      'User validation failed: password: Path `password` is required.'
+    );
+    mongoose.connection.db.dropDatabase();
+    done();
+  });
 });

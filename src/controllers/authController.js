@@ -21,11 +21,7 @@ router.post('/register', async (req, res) => {
     if (await User.findOne({ email })) {
       return res.status(400).send({ error: 'user already exists' });
     }
-
     const user = await User.create(req.body);
-
-    console.log('\n\n user created -> ', user);
-
     if (user) {
       // if (false) {
       // create reusable transporter object using the default SMTP transport
@@ -67,13 +63,7 @@ router.post('/register', async (req, res) => {
                 </a>.
               </p>
               `, // html body
-      });
-
-      console.log('Message sent: %s', info.messageId);
-      console.log('email -> ', email);
-
-      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    }
+      });    }
 
     // so the password doesnt get sent back on the response
     user.password = undefined;
@@ -83,10 +73,7 @@ router.post('/register', async (req, res) => {
     // res.send({ user, token });
     return res.status(200).send({ user, token });
   } catch (error) {
-    console.log('====================================');
-    console.log('registration failed -> ', error);
-    console.log('====================================');
-    return res.status(400).send({ error: 'registration failed' });
+    return res.status(400).send({ error: 'registration failed', errorMessage: error.message });
   }
 });
 
