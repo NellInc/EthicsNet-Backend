@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { DATABASE } from '../globals';
 
+// set up testing database
 if (process.env.NODE_ENV === 'test') {
   mongoose
     .connect('mongodb://localhost:27017/ethics-net-test', {
