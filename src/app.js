@@ -35,6 +35,10 @@ function blah(req, res, next) {
   res.status(301).send({ error: 'please move this route' });
 }
 
+app.get('/healthcheck', async (req, res) => {
+  return res.status(200).send({ msg: 'ok' });
+});
+
 app.use('/auth', auth);
 app.use('/api', authMiddleware, apiRoutes);
 
@@ -45,19 +49,20 @@ app.use('/api2/video', authMiddleware, videoRoutes);
 app.use('/api2/admin', adminMiddleware, adminRoutes);
 
 app.get('/', (req, res) => {
-
   // throw new Error('error')
 
   res.json({
     message:
-      'this is the ethics net api! :) check out out the routes! PORT -> ' + PORT,
+      'this is the ethics net api! :) check out out the routes! PORT -> ' +
+      PORT,
   });
 });
 
 // TODO: change this to 5000 when on deployment
-app.listen(80, () =>
-  console.log('api is working usually on port 80')
-);
+
+export default app;
+// module.exports = app;
+// app.listen(80, () => console.log('api is working usually on port 80'));
 
 // its better to blow up a home than continue with one unworth the name
 // cada um colhe o que planta?

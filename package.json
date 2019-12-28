@@ -4,12 +4,13 @@
   "description": "ethics eth backend ",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/app.js",
+    "dev": "nodemon --exec babel-node src/start.js",
     "build": "babel src --out-dir dist",
     "start": "babel src --out-dir dist && nodemon -x 'node dist/app.js || touch dist/app.js'",
     "prod": "yarn build && pm2 start dist/app.js --name 'ethics-net'",
     "stop-prod": "pm2 stop ethics-net",
-    "restart-prod": "pm2 stop ethics-net"
+    "restart-prod": "pm2 stop ethics-net",
+    "test": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,14 @@
     "@babel/core": "^7.0.0-rc.1",
     "@babel/node": "^7.0.0-rc.1",
     "@babel/preset-env": "^7.0.0-rc.1",
-    "nodemon": "^1.19.1"
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.1",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }
