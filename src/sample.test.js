@@ -30,6 +30,36 @@ describe('get endpoints', () => {
     done();
   });
 
+  it('should not add two users with the same email', async done => {
+    const response = await request
+      // .get('/healthcheck')
+      .post('/auth/register')
+      .send({
+        email: 'emerson99@gmail.com',
+        password: '123',
+        lastName: 'Lopes',
+        firstName: 'Emerson',
+      });
+
+    expect(response.statusCode).toEqual(200);
+
+    const response2 = await request
+      // .get('/healthcheck')
+      .post('/auth/register')
+      .send({
+        email: 'emerson99@gmail.com',
+        password: '123',
+        lastName: 'Lopes',
+        firstName: 'Emerson',
+      });
+
+    expect(response2.statusCode).toEqual(400);
+    expect(response2.body.error).toBe('user already exists')
+
+    mongoose.connection.db.dropDatabase();
+    done();
+  });
+
   it('should throw an error if no email is provided', async done => {
     const response = await request.post('/auth/register').send({
       email: '',
