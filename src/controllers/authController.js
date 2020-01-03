@@ -22,7 +22,10 @@ router.post('/register', async (req, res) => {
       return res.status(400).send({ error: 'user already exists' });
     }
     const user = await User.create(req.body);
-    if (user) {
+
+    // Set to false for testing purposes -- sendgrid free plan has a limit
+    // of emails that can be sent
+    if (false) {
       // if (false) {
       // create reusable transporter object using the default SMTP transport
       // This is just a dev email account
@@ -93,6 +96,11 @@ router.post('/authenticate', async (req, res) => {
   }
 
   const fullUser = await User.findById(user._id);
+
+  if (!fullUser) {
+    return res.status(400).send({ error: 'full user not found' });
+  }
+
   fullUser.password = undefined;
 
   const token = generateToken({ id: user._id, isAdmin: user.isAdmin });

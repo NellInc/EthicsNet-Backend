@@ -6,7 +6,7 @@ jest.setTimeout(30000);
 
 const request = supertest(app);
 
-describe('get endpoints', () => {
+describe('Sign up endpoints', () => {
   it('gets the healthcheck endpoint', async done => {
     const response = await request.get('/healthcheck');
     expect(response.status).toBe(200);
@@ -19,42 +19,38 @@ describe('get endpoints', () => {
       // .get('/healthcheck')
       .post('/auth/register')
       .send({
-        email: 'emerson99@gmail.com',
+        email: 'emerson@gmail.com',
         password: '123',
         lastName: 'Lopes',
         firstName: 'Emerson',
       });
 
     expect(response.statusCode).toEqual(200);
+    expect(response.body.user).toBeTruthy();
+    expect(response.body.token).toBeTruthy();
     mongoose.connection.db.dropDatabase();
     done();
   });
 
   it('should not add two users with the same email', async done => {
-    const response = await request
-      // .get('/healthcheck')
-      .post('/auth/register')
-      .send({
-        email: 'emerson99@gmail.com',
-        password: '123',
-        lastName: 'Lopes',
-        firstName: 'Emerson',
-      });
+    const response = await request.post('/auth/register').send({
+      email: 'lopes@gmail.com',
+      password: '123',
+      lastName: 'Lopes',
+      firstName: 'Emerson',
+    });
 
     expect(response.statusCode).toEqual(200);
 
-    const response2 = await request
-      // .get('/healthcheck')
-      .post('/auth/register')
-      .send({
-        email: 'emerson99@gmail.com',
-        password: '123',
-        lastName: 'Lopes',
-        firstName: 'Emerson',
-      });
+    const response2 = await request.post('/auth/register').send({
+      email: 'lopes@gmail.com',
+      password: '123',
+      lastName: 'Lopes',
+      firstName: 'Emerson',
+    });
 
     expect(response2.statusCode).toEqual(400);
-    expect(response2.body.error).toBe('user already exists')
+    expect(response2.body.error).toBe('user already exists');
 
     mongoose.connection.db.dropDatabase();
     done();
@@ -78,7 +74,7 @@ describe('get endpoints', () => {
 
   it('should throw an error if no firstName is provided', async done => {
     const response = await request.post('/auth/register').send({
-      email: 'emerson1@gmail.com',
+      email: 'test@gmail.com',
       password: '123',
       lastName: 'Lopes',
       firstName: '',
@@ -93,7 +89,7 @@ describe('get endpoints', () => {
 
   it('should throw an error if no lastName is provided', async done => {
     const response = await request.post('/auth/register').send({
-      email: 'emerson2@gmail.com',
+      email: 'test@gmail.com',
       password: '123',
       lastName: '',
       firstName: 'Emerson',
@@ -108,7 +104,7 @@ describe('get endpoints', () => {
 
   it('should throw an error if no password is provided', async done => {
     const response = await request.post('/auth/register').send({
-      email: 'emerson3@gmail.com',
+      email: 'test@gmail.com',
       password: '',
       lastName: 'Lopes',
       firstName: 'Emerson',
