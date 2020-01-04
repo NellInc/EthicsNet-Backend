@@ -74,7 +74,7 @@ router.post('/register', async (req, res) => {
     const token = generateToken({ id: user._id, isAdmin: user.isAdmin });
 
     // res.send({ user, token });
-    return res.status(200).send({ user, token });
+    return res.status(200).send({ user, token, message: 'Welcome to EthicsNet!' });
   } catch (error) {
     return res.status(400).send({ error: 'registration failed', errorMessage: error.message });
   }
@@ -104,17 +104,18 @@ router.post('/authenticate', async (req, res) => {
   fullUser.password = undefined;
 
   const token = generateToken({ id: user._id, isAdmin: user.isAdmin });
-  res.send({ user: fullUser, token });
+  res.send({ user: fullUser, token, message: 'Welcome back!' });
 });
 
 router.get('/email/:email', async (req, res) => {
+  // return res.status(200).send({ message: 'Welcome to EthicsNet!' });
   const { email } = req.params;
 
   if (await User.findOne({ email })) {
-    return res.status(400).send({ error: 'user already exists' });
+    return res.status(400).send({ error: 'User already exists' });
   }
 
-  return res.status(200).send({ msg: 'ok' });
+  return res.status(200).send({ message: 'ok' });
 });
 
 export default router;
