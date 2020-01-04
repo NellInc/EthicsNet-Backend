@@ -104,7 +104,7 @@ router.post('/authenticate', async (req, res) => {
   fullUser.password = undefined;
 
   const token = generateToken({ id: user._id, isAdmin: user.isAdmin });
-  res.send({ user: fullUser, token, message: 'Welcome back!' });
+  res.send({ user: fullUser, token, message: 'Welcome back ' + fullUser.firstName });
 });
 
 router.get('/email/:email', async (req, res) => {
