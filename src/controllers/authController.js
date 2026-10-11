@@ -2,14 +2,15 @@ import express from 'express';
 import User from '../models/user.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
+import jwtSecret from '../config/auth';
+import { publicUserInput } from '../helpers/userInput';
 
 const router = express.Router();
 
 // whats unique about your user model
 // and a secret key
 function generateToken(params = {}) {
-  return jwt.sign(params, 'secret', {
+  return jwt.sign(params, jwtSecret, {
     expiresIn: '30d',
   });
 }
@@ -21,52 +22,7 @@ router.post('/register', async (req, res) => {
     if (await User.findOne({ email })) {
       return res.status(400).send({ error: 'user already exists' });
     }
-    const user = await User.create(req.body);
-
-    // Set to false for testing purposes -- sendgrid free plan has a limit
-    // of emails that can be sent
-    if (false) {
-      // if (false) {
-      // create reusable transporter object using the default SMTP transport
-      // This is just a dev email account
-      let transporter = nodemailer.createTransport({
-        host: 'smtp.sendgrid.net',
-        port: 465,
-        secure: true,
-        auth: {
-          user: 'apikey',
-          pass:
-            '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',
-        },
-      });
-
-      // send mail with defined transport object
-      let info = await transporter.sendMail({
-        from: '"Ethics Net Team" <ethics.net.dev@gmail.com>', // sender address
-        to: email, // list of receivers
-        subject: 'Welcome to Ethics Net ✔', // Subject line
-        text:
-          'Welcome to Ethics Net! Now you can start annotating text from the web!', // plain text body
-        html: `
-              <p>
-                Welcome to Ethics Net! Now you can start annotating text from the web!
-              </p>
-
-              <p>
-                Visit 
-                  <a href="http://extension.lupuselit.me/" target="_blank">
-                    extension.lupuselit.me
-                  </a>
-                  to get started.
-              </p>
-              <p>
-                Download the 
-                <a href="https://chrome.google.com/webstore/detail/ethics-net/djamiamgnjcpjhkknjddilkaibbhmhgc" target="_blank">
-                  Chrome extension
-                </a>.
-              </p>
-              `, // html body
-      });    }
+    const user = await User.create({ ...publicUserInput(req.body), isAdmin: false });
 
     // so the password doesnt get sent back on the response
     user.password = undefined;

@@ -3,6 +3,7 @@ import User from '../models/user';
 import Image from '../models/images';
 import Video from '../models/video';
 import Text from '../models/textanotation';
+import { publicUserUpdate, ownsAccount } from '../helpers/userInput';
 
 const router = express.Router();
 
@@ -62,16 +63,11 @@ router.get('/data', async (req, res) => {
 
 // Updates the user info
 router.put('/:id', async (req, res) => {
+  if (!ownsAccount(req, res)) return;
   try {
-    const { id } = req.params;
+    const id = req.userId;
 
-    // user cannot update their admin role
-    // must to that manually --
-    delete req.body.isAdmin;
-    console.log(typeof req.body);
-    console.log(req.body);
-
-    const user = await User.findOneAndUpdate({ _id: id }, req.body, {
+    const user = await User.findOneAndUpdate({ _id: id }, await publicUserUpdate(req.body), {
       new: true,
     });
 
@@ -84,8 +80,9 @@ router.put('/:id', async (req, res) => {
 
 // Deletes an user
 router.delete('/:id', async (req, res) => {
+  if (!ownsAccount(req, res)) return;
   try {
-    const { id } = req.params;
+    const id = req.userId;
     const user = await User.remove({ _id: id });
     const removedText = await Text.remove({ authorId: id });
     const removedImage = await Image.remove({ authorId: id });
@@ -104,8 +101,9 @@ router.delete('/:id', async (req, res) => {
 
 // Updates an user image
 router.put('/image/:id', async (req, res) => {
+  if (!ownsAccount(req, res)) return;
   try {
-    const { id } = req.params;
+    const id = req.userId;
     const user = await User.updateOne(
       { _id: id },
       {
@@ -124,8 +122,9 @@ router.put('/image/:id', async (req, res) => {
 
 // Updates an user video
 router.put('/video/:id', async (req, res) => {
+  if (!ownsAccount(req, res)) return;
   try {
-    const { id } = req.params;
+    const id = req.userId;
     const user = await User.updateOne(
       { _id: id },
       {
