@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import jwtSecret from '../config/auth';
 
 export default (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -20,7 +21,7 @@ export default (req, res, next) => {
   //   return res.status(401).send({ error: 'token malformatted 2' });
   // }
 
-  jwt.verify(token, 'secret', (error, decoded) => {
+  jwt.verify(token, jwtSecret, (error, decoded) => {
     if (error) {
       return res.status(401).send({ error: 'token invalid' });
     }

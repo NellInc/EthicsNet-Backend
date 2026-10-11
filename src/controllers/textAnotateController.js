@@ -9,8 +9,14 @@ import User from '../models/user.js';
 import TextAnotation from '../models/textanotation.js';
 import Image from '../models/images';
 import Video from '../models/video';
+import { publicUserUpdate, ownsAccount } from '../helpers/userInput';
 
 const router = express.Router();
+const assetInput = (model, body) => Object.keys(model.schema.paths).reduce((data, field) => {
+  if (!['_id', '__v', 'authorId'].includes(field) && body &&
+      Object.prototype.hasOwnProperty.call(body, field)) data[field] = body[field];
+  return data;
+}, {});
 
 router.get('/post-text', (req, res) => {
   res.send({
@@ -23,7 +29,7 @@ router.get('/post-text', (req, res) => {
 // MOVED
 router.post('/image', async (req, res) => {
   try {
-    const imageCreated = await Image.create(req.body);
+    const imageCreated = await Image.create({ ...assetInput(Image, req.body), authorId: req.userId });
     return res.status(200).send({ message: 'image saved!', imageCreated });
   } catch (error) {
     console.log(error);
@@ -34,7 +40,7 @@ router.post('/image', async (req, res) => {
 // MOVED
 router.post('/video', async (req, res) => {
   try {
-    const videoCreated = await Video.create(req.body);
+    const videoCreated = await Video.create({ ...assetInput(Video, req.body), authorId: req.userId });
     return res.status(200).send({ message: 'video saved!', videoCreated });
   } catch (error) {
     console.log(error);
@@ -45,7 +51,7 @@ router.post('/video', async (req, res) => {
 // FIXME: MOVED
 router.post('/post-text', async (req, res) => {
   try {
-    const textCreated = await TextAnotation.create(req.body);
+    const textCreated = await TextAnotation.create({ ...assetInput(TextAnotation, req.body), authorId: req.userId });
     return res.status(200).send({ message: 'text anotated!', textCreated });
     //
   } catch (error) {
@@ -127,7 +133,7 @@ router.delete('/user/images/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
-    const anotation = await Image.deleteOne({ _id: id });
+    const anotation = await Image.deleteOne({ _id: id, authorId: req.userId });
 
     return res.status(200).send({ anotation });
   } catch (error) {
@@ -176,8 +182,8 @@ router.put('/user/anotations/:id', async (req, res) => {
     const { id } = req.params;
 
     const anotation = await TextAnotation.findOneAndUpdate(
-      { _id: id },
-      req.body,
+      { _id: id, authorId: req.userId },
+      { $set: assetInput(TextAnotation, req.body) },
       { new: true }
     );
 
@@ -193,7 +199,7 @@ router.delete('/user/anotations/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
-    const anotation = await TextAnotation.deleteOne({ _id: id });
+    const anotation = await TextAnotation.deleteOne({ _id: id, authorId: req.userId });
 
     return res.status(200).send({ anotation });
   } catch (error) {
@@ -204,8 +210,9 @@ router.delete('/user/anotations/:id', async (req, res) => {
 
 // USER ROUTE ?!? OR PLACE IT ON A DIFFERENT PLACE
 router.put('/user/image/:id', async (req, res) => {
+  if (!ownsAccount(req, res)) return;
   try {
-    const { id } = req.params;
+    const id = req.userId;
     const user = await User.updateOne(
       { _id: id },
       {
@@ -224,8 +231,9 @@ router.put('/user/image/:id', async (req, res) => {
 
 // USER ROUTE ?!? OR PLACE IT ON A DIFFERENT PLACE
 router.put('/user/video/:id', async (req, res) => {
+  if (!ownsAccount(req, res)) return;
   try {
-    const { id } = req.params;
+    const id = req.userId;
     const user = await User.updateOne(
       { _id: id },
       {
@@ -242,10 +250,11 @@ router.put('/user/video/:id', async (req, res) => {
 
 // FIXME: MOVED!
 router.put('/user/:id', async (req, res) => {
+  if (!ownsAccount(req, res)) return;
   try {
-    const { id } = req.params;
+    const id = req.userId;
 
-    const user = await User.findOneAndUpdate({ _id: id }, req.body, {
+    const user = await User.findOneAndUpdate({ _id: id }, await publicUserUpdate(req.body), {
       new: true,
     });
 

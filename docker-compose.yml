@@ -4,6 +4,8 @@ services:
     container_name: ethics-net-backend
     restart: always
     build: ./
+    environment:
+      JWT_SECRET: "${JWT_SECRET:?Supply JWT_SECRET from secure runtime configuration}"
     ports:
       - "80:5000"
     volumes:

@@ -1,12 +1,22 @@
 import express from 'express';
 import Video from '../models/video';
 
+// Only schema fields may be supplied by clients; ownership is server-managed.
+const editableFields = ['title', 'description', 'videoUrl', 'videoStart', 'videoEnd', 'category', 'contentAction', 'toneForm', 'createdAt', 'selectedPerson'];
+const editableData = (body) =>
+  editableFields.reduce((data, field) => {
+    if (body && Object.prototype.hasOwnProperty.call(body, field)) {
+      data[field] = body[field];
+    }
+    return data;
+  }, {});
+
 const router = express.Router();
 
 // creates a new video annotation
 router.post('/', async (req, res) => {
   try {
-    const videoCreated = await Video.create(req.body);
+    const videoCreated = await Video.create({ ...editableData(req.body), authorId: req.userId });
     return res.status(200).send({ message: 'video saved!', videoCreated });
   } catch (error) {
     console.log(error);
@@ -42,8 +52,8 @@ router.put('/update/:id', async (req, res) => {
     const { selectedPerson } = req.body;
 
     const video = await Video.findOneAndUpdate(
-      { _id: id },
-      { selectedPerson },
+      { _id: id, authorId: req.userId },
+      { $set: { selectedPerson } },
       { new: true }
     );
 
@@ -58,7 +68,7 @@ router.put('/edit/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
-    const video = await Video.findOneAndUpdate({ _id: id }, req.body, {
+    const video = await Video.findOneAndUpdate({ _id: id, authorId: req.userId }, { $set: editableData(req.body) }, {
       new: true,
     });
 
@@ -72,7 +82,7 @@ router.put('/edit/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const video = await Video.deleteOne({ _id: id });
+    const video = await Video.deleteOne({ _id: id, authorId: req.userId });
 
     return res.status(200).send({ video });
   } catch (error) {

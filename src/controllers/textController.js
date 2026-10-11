@@ -1,11 +1,21 @@
 import express from 'express';
 import Text from '../models/textanotation';
 
+// Only schema fields may be supplied by clients; ownership is server-managed.
+const editableFields = ['category', 'font', 'content', 'categoryRangeContentAction', 'categoryRangeToneForm', 'createdAt'];
+const editableData = (body) =>
+  editableFields.reduce((data, field) => {
+    if (body && Object.prototype.hasOwnProperty.call(body, field)) {
+      data[field] = body[field];
+    }
+    return data;
+  }, {});
+
 const router = express.Router();
 
 router.post('/', async (req, res) => {
   try {
-    const textCreated = await Text.create(req.body);
+    const textCreated = await Text.create({ ...editableData(req.body), authorId: req.userId });
     return res.status(200).send({ message: 'text anotated!', textCreated });
   } catch (error) {
     console.log(error);
@@ -29,7 +39,7 @@ router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
-    const anotation = await Text.findOneAndUpdate({ _id: id }, req.body, {
+    const anotation = await Text.findOneAndUpdate({ _id: id, authorId: req.userId }, { $set: editableData(req.body) }, {
       new: true,
     });
 
@@ -46,7 +56,7 @@ router.delete('/:id', async (req, res) => {
 
     console.log('deleting annotation...');
 
-    const anotation = await Text.deleteOne({ _id: id });
+    const anotation = await Text.deleteOne({ _id: id, authorId: req.userId });
 
     return res.status(200).send({ anotation });
   } catch (error) {
